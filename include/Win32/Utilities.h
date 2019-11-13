@@ -10,15 +10,12 @@
 #include <string>
 
 namespace fusion {
+namespace win32 {
 
 std::wstring LoadString(int id);
 
-class noncopyable {
-public:
-	noncopyable() = default;
-	~noncopyable() = default;
-	noncopyable(const noncopyable&) = delete;
-	noncopyable& operator=(const noncopyable&) = delete;
-};
+static const int False = 0;
+static const int True = 1;
 
+} // namespace win32
 } // namespace fusion

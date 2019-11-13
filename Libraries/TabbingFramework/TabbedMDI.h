@@ -2,17 +2,17 @@
 // TabbedMDI.h - Classes that help implement a "Tabbed MDI" interface.
 //
 // Classes:
-//   CTabbedMDIFrameWindowImpl - 
+//   CTabbedMDIFrameWindowImpl -
 //      Instead of having CMainFrame inherit from
 //      CMDIFrameWindowImpl, you can have it inherit from
 //      CTabbedMDIFrameWindowImpl. For an out-of-the box WTL MDI
 //      application, there are 3 instances of CMDIFrameWindowImpl
 //      to replace with CTabbedMDIFrameWindowImpl.
-//   CTabbedMDIChildWindowImpl - 
+//   CTabbedMDIChildWindowImpl -
 //      If you want your MDI child window to have a corresponding
 //      tab in the MDI tab window, inherit from this class instead
 //      of from CMDIChildWindowImpl.
-//   CTabbedMDIClient - 
+//   CTabbedMDIClient -
 //      The CTabbedMDIFrameWindowImpl contains CTabbedMDIClient,
 //      which subclasses the "MDI Client" window
 //      (from the OS, that manages the MDI child windows).
@@ -21,7 +21,7 @@
 //      for the tabs with the HWND of the active child,
 //      etc.  You can use CTabbedMDIClient without using
 //      CTabbedMDIFrameWindowImpl. To do so, simply call
-//      SetTabOwnerParent(m_hWnd) then SubclassWindow(m_hWndMDIClient)
+//      SetTabOwnerParent(this->m_hWnd) then SubclassWindow(this->m_hWndMDIClient)
 //      on a CTabbedMDIClient member variable after calling
 //      CreateMDIClient in your main frame class.
 //   CMDITabOwner -
@@ -41,8 +41,8 @@
 //      and min/max/close button in the command bar when the
 //      child is maximized.  To add additional functionality,
 //      derive your own class from CTabbedMDICommandBarCtrlImpl.
-//      
-//     
+//
+//
 //
 // Written by Daniel Bowen (dbowen@es.com)
 // Copyright (c) 2002-2005 Daniel Bowen.
@@ -51,8 +51,8 @@
 //  with the modifications by Daniel Bowen
 //
 // This code may be used in compiled form in any way you desire. This
-// file may be redistributed by any means PROVIDING it is 
-// not sold for profit without the authors written consent, and 
+// file may be redistributed by any means PROVIDING it is
+// not sold for profit without the authors written consent, and
 // providing that this notice and the authors name is included.
 //
 // This file is provided "as is" with no expressed or implied warranty.
@@ -71,7 +71,7 @@
 //   * Add GetMDITabCtrl
 //
 // 2005/04/12: Daniel Bowen
-// - CTabbedMDIClient::OnNcPaint - 
+// - CTabbedMDIClient::OnNcPaint -
 //   * CDC dc(this->GetWindowDC());
 //       should be
 //     CWindowDC dc(this->m_hWnd);
@@ -118,7 +118,7 @@
 // - Clean up warnings on level 4
 //
 // 2004/05/14: Daniel Bowen
-// - CMDITabOwnerImpl - 
+// - CMDITabOwnerImpl -
 //   * Update OnClick handling so it only sets focus to the tab view
 //     if the selected tab is being clicked. Without this update,
 //     other code that tries to minimize flickering when switching
@@ -129,7 +129,7 @@
 // 2004/04/29: Daniel Bowen
 // - Require WTL version 7.1 or later (because of WTL's CMDICommandBarCtrlImpl)
 // - New and changed registered messages for tabbed MDI children:
-//   * UWM_MDICHILDISMODIFIED - Asks whether the document(s) referenced by a 
+//   * UWM_MDICHILDISMODIFIED - Asks whether the document(s) referenced by a
 //     tabbed MDI child has been modified, and if so, the LPARAM has an
 //     ITabbedMDIChildModifiedItem* with which to fill out information.
 //     Return TRUE if there are one or more modified documents for the child.
@@ -217,7 +217,7 @@
 // 2002/12/11: Daniel Bowen
 // - New UWM_MDICHILDSAVEMODIFIED message sent to MDI child frames.
 //   The child frame receiving this should see if the "document"
-//   has been modified, and needs to be saved (usually with a 
+//   has been modified, and needs to be saved (usually with a
 //   yes/no/cancel message box).  If the user chooses to cancel,
 //   return non-zero from the UWM_MDICHILDSAVEMODIFIED handler.
 // - CTabbedMDIClient -
@@ -236,12 +236,12 @@
 //     MDIActivate (more like the MFC code in CMDIChildWnd::OnMouseActivate)
 //
 // 2002/11/21: Daniel Bowen
-// - CMDITabOwner - 
+// - CMDITabOwner -
 //   * ModifyTabStyles for use before CMDITabOwner is created as a window
 // - CTabbedMDIClient -
 //   * Expose SetDrawFlat and GetDrawFlat
 //   * Updates so that drawing flat draws correctly
-// - CTabbedMDIChildWindowImpl - 
+// - CTabbedMDIChildWindowImpl -
 //   * Handle WM_MOUSEACTIVATE, and call MDIActivate if
 //     MDI child is not already active.  This solves the problem
 //     where you have a dialog window as the view of the MDI child,
@@ -288,7 +288,7 @@
 //     be declared in this header file (whose constructor will be called
 //     by the CRT at load time).  If you are not referencing
 //     TabbedMDI.h in stdafx.h, and have multiple translation units
-//     including it, then you'll need to do it the 
+//     including it, then you'll need to do it the
 //     _TABBEDMDI_MESSAGES_EXTERN_REGISTER way.  Also, if you do
 //     use _ATL_MIN_CRT, you will get a warning unless you define
 //     _TABBEDMDI_MESSAGES_NO_WARN_ATL_MIN_CRT
@@ -308,7 +308,7 @@
 //   * New method "UseMDIChildIcon" to specify that you want the MDI
 //     tabs to include the document icon for the MDI child on the
 //     corresponding tab
-// 
+//
 // 2002/06/12: Daniel Bowen
 // - Publish codeproject article.  For history prior
 //   to the release of the article, please see the article
@@ -320,27 +320,27 @@
 #pragma once
 
 #ifndef __cplusplus
-	#error Tabbed MDI requires C++ compilation (use a .cpp suffix)
+#error Tabbed MDI requires C++ compilation (use a .cpp suffix)
 #endif
 
 #ifndef __ATLAPP_H__
-	#error TabbedMDI.h requires atlapp.h to be included first
+#error TabbedMDI.h requires atlapp.h to be included first
 #endif
 
 #ifndef __ATLWIN_H__
-	#error TabbedMDI.h requires atlwin.h to be included first
+#error TabbedMDI.h requires atlwin.h to be included first
 #endif
 
 #ifndef __ATLFRAME_H__
-	#error TabbedFrame.h requires atlframe.h to be included first
+#error TabbedFrame.h requires atlframe.h to be included first
 #endif
 
 #ifndef __ATLCTRLW_H__
-	#error TabbedFrame.h requires atlctrlw.h to be included first
+#error TabbedFrame.h requires atlctrlw.h to be included first
 #endif
 
 #if _WTL_VER < 0x0710
-	#error TabbedMDI.h requires WTL 7.1 or higher
+#error TabbedMDI.h requires WTL 7.1 or higher
 #endif
 
 #ifndef __CUSTOMTABCTRL_H__
@@ -364,23 +364,22 @@
 
 template <
 	class T,
-	class TClient = CTabbedMDIClient< CDotNetTabCtrl<CTabViewTabItem> >,
+	class TClient = CTabbedMDIClient<CDotNetTabCtrl<CTabViewTabItem>>,
 	class TBase = WTL::CMDIWindow,
 	class TWinTraits = ATL::CFrameWinTraits>
-class ATL_NO_VTABLE CTabbedMDIFrameWindowImpl :
-	public WTL::CMDIFrameWindowImpl<T, TBase, TWinTraits >
+class ATL_NO_VTABLE CTabbedMDIFrameWindowImpl : public WTL::CMDIFrameWindowImpl<T, TBase, TWinTraits>
 {
 public:
 	// Expose the type of MDI client
 	typedef typename TClient TClient;
 	// Expose the type of tab control
 	typedef typename TClient::TTabCtrl TTabCtrl;
-	
-// Member variables
+
+	// Member variables
 protected:
 	TClient m_tabbedClient;
 
-// Methods
+	// Methods
 public:
 	// Either call the normal "CreateMDIClient"
 
@@ -396,9 +395,9 @@ public:
 	// Or, after creating the client, call SubclassMDIClient
 	BOOL SubclassMDIClient()
 	{
-		ATLASSERT(m_hWndMDIClient && ::IsWindow(m_hWndMDIClient));
+		ATLASSERT(this->m_hWndMDIClient && ::IsWindow(this->m_hWndMDIClient));
 
-		return m_tabbedClient.SubclassWindow(m_hWndMDIClient);
+		return this->m_tabbedClient.SubclassWindow(this->m_hWndMDIClient);
 	}
 
 	void SetTabOwnerParent(HWND hWndTabOwnerParent)
@@ -408,18 +407,18 @@ public:
 
 	HWND GetTabOwnerParent() const
 	{
-		return m_tabbedClient.GetTabOwnerParent();
+		return this->m_tabbedClient.GetTabOwnerParent();
 	}
 
 	TTabCtrl& GetMDITabCtrl()
 	{
-		return m_tabbedClient.GetTabOwner().GetTabCtrl();
+		return this->m_tabbedClient.GetTabOwner().GetTabCtrl();
 	}
 
-// Message Handling
+	// Message Handling
 public:
-	typedef CTabbedMDIFrameWindowImpl< T, TBase, TWinTraits >	thisClass;
-	typedef WTL::CMDIFrameWindowImpl<T, TBase, TWinTraits >	baseClass;
+	typedef CTabbedMDIFrameWindowImpl<T, TBase, TWinTraits> thisClass;
+	typedef WTL::CMDIFrameWindowImpl<T, TBase, TWinTraits> baseClass;
 	BEGIN_MSG_MAP(thisClass)
 		CHAIN_MSG_MAP(baseClass)
 	END_MSG_MAP()
@@ -428,11 +427,11 @@ public:
 template <class T, class TBase = WTL::CMDIWindow, class TWinTraits = ATL::CMDIChildWinTraits>
 class ATL_NO_VTABLE CTabbedMDIChildWindowImpl : public WTL::CMDIChildWindowImpl<T, TBase, TWinTraits>
 {
-// Member variables
+	// Member variables
 protected:
 	bool m_bMaximized;
 
-// Constructors
+	// Constructors
 public:
 	CTabbedMDIChildWindowImpl() :
 		m_bMaximized(false)
@@ -440,20 +439,19 @@ public:
 		ATLASSERT(UWM_MDICHILDACTIVATIONCHANGE != 0 && "The TabbedMDI Messages didn't get registered properly");
 	}
 
-// Overrides ofCMDIChildWindowImpl
+	// Overrides ofCMDIChildWindowImpl
 public:
-
 	// NOTE: CreateEx also calls this (through T*)
 	HWND Create(HWND hWndParent, _U_RECT rect = NULL, LPCTSTR szWindowName = NULL,
-			DWORD dwStyle = 0U, DWORD dwExStyle = 0U,
-			UINT nMenuID = 0U, LPVOID lpCreateParam = NULL)
+		DWORD dwStyle = 0U, DWORD dwExStyle = 0U,
+		UINT nMenuID = 0U, LPVOID lpCreateParam = NULL)
 	{
 		// NOTE: hWndParent is going to become m_hWndMDIClient
 		//  in CMDIChildWindowImpl::Create
 		ATLASSERT(::IsWindow(hWndParent));
 
 		BOOL bMaximizeNewChild = (WS_MAXIMIZE == (T::GetWndStyle(dwStyle) & WS_MAXIMIZE));
-		if(bMaximizeNewChild == FALSE)
+		if (bMaximizeNewChild == FALSE)
 		{
 			// If WS_MAXIMIZE wasn't requested, check if the currently
 			//  active MDI child (if there is one) is maximized.  If so,
@@ -461,7 +459,7 @@ public:
 			::SendMessage(hWndParent, WM_MDIGETACTIVE, 0, (LPARAM)&bMaximizeNewChild);
 		}
 
-		if(bMaximizeNewChild == TRUE)
+		if (bMaximizeNewChild == TRUE)
 		{
 			::SendMessage(hWndParent, WM_SETREDRAW, FALSE, 0);
 
@@ -473,7 +471,7 @@ public:
 
 		HWND hWnd = baseClass::Create(hWndParent, rect, szWindowName, dwStyle, dwExStyle, nMenuID, lpCreateParam);
 
-		if(bMaximizeNewChild == TRUE)
+		if (bMaximizeNewChild == TRUE)
 		{
 			::ShowWindow(hWnd, SW_SHOWMAXIMIZED);
 
@@ -483,39 +481,38 @@ public:
 				RDW_INVALIDATE | RDW_ALLCHILDREN);
 		}
 
-		if(hWnd != NULL && ::IsWindow(m_hWnd) && !::IsChild(hWnd, ::GetFocus()))
+		if (hWnd != NULL && ::IsWindow(this->m_hWnd) && !::IsChild(hWnd, ::GetFocus()))
 			::SetFocus(hWnd);
 
 		return hWnd;
 	}
 
-// Methods
+	// Methods
 public:
 	void SetTitle(LPCTSTR sNewTitle, BOOL bUpdateTabText = TRUE)
 	{
 		this->SetWindowText(sNewTitle);
 
-		if(bUpdateTabText)
+		if (bUpdateTabText)
 		{
-			::SendMessage(m_hWndMDIClient, UWM_MDICHILDTABTEXTCHANGE, (WPARAM)m_hWnd, (LPARAM)sNewTitle);
+			::SendMessage(this->m_hWndMDIClient, UWM_MDICHILDTABTEXTCHANGE, (WPARAM)m_hWnd, (LPARAM)sNewTitle);
 		}
 	}
 
 	void SetTabText(LPCTSTR sNewTabText)
 	{
-		::SendMessage(m_hWndMDIClient, UWM_MDICHILDTABTEXTCHANGE, (WPARAM)m_hWnd, (LPARAM)sNewTabText);
+		::SendMessage(this->m_hWndMDIClient, UWM_MDICHILDTABTEXTCHANGE, (WPARAM)m_hWnd, (LPARAM)sNewTabText);
 	}
 
 	void SetTabToolTip(LPCTSTR sNewToolTip)
 	{
-		::SendMessage(m_hWndMDIClient, UWM_MDICHILDTABTOOLTIPCHANGE, (WPARAM)m_hWnd, (LPARAM)sNewToolTip);
+		::SendMessage(this->m_hWndMDIClient, UWM_MDICHILDTABTOOLTIPCHANGE, (WPARAM)m_hWnd, (LPARAM)sNewToolTip);
 	}
 
-// Message Handling
+	// Message Handling
 public:
-
-	typedef CTabbedMDIChildWindowImpl< T, TBase, TWinTraits >	thisClass;
-	typedef WTL::CMDIChildWindowImpl<T, TBase, TWinTraits >	baseClass;
+	typedef CTabbedMDIChildWindowImpl<T, TBase, TWinTraits> thisClass;
+	typedef WTL::CMDIChildWindowImpl<T, TBase, TWinTraits> baseClass;
 	BEGIN_MSG_MAP(thisClass)
 		MESSAGE_HANDLER(WM_MDIACTIVATE, OnMDIActivate)
 		MESSAGE_HANDLER(WM_SETTEXT, OnSetText)
@@ -533,9 +530,9 @@ public:
 		//HWND hWndDeactivating = (HWND)wParam;
 		HWND hWndActivating = (HWND)lParam;
 
-		if(m_hWnd == hWndActivating)
+		if (this->m_hWnd == hWndActivating)
 		{
-			::SendMessage(m_hWndMDIClient, UWM_MDICHILDACTIVATIONCHANGE, (WPARAM)m_hWnd, 0);
+			::SendMessage(this->m_hWndMDIClient, UWM_MDICHILDACTIVATIONCHANGE, (WPARAM)m_hWnd, 0);
 		}
 
 		bHandled = FALSE;
@@ -544,7 +541,7 @@ public:
 
 	LRESULT OnSetText(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
 	{
-		//::SendMessage(m_hWndMDIClient, UWM_MDICHILDTABTEXTCHANGE, (WPARAM)m_hWnd, lParam);
+		//::SendMessage(this->m_hWndMDIClient, UWM_MDICHILDTABTEXTCHANGE, (WPARAM)m_hWnd, lParam);
 
 		bHandled = FALSE;
 		return 0;
@@ -552,15 +549,15 @@ public:
 
 	LRESULT OnSize(UINT /*uMsg*/, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 	{
-		if(wParam == SIZE_MAXIMIZED && m_bMaximized == false)
+		if (wParam == SIZE_MAXIMIZED && this->m_bMaximized == false)
 		{
 			m_bMaximized = true;
-			::SendMessage(m_hWndMDIClient, UWM_MDICHILDMAXIMIZED, (WPARAM)m_hWnd, lParam);
+			::SendMessage(this->m_hWndMDIClient, UWM_MDICHILDMAXIMIZED, (WPARAM)m_hWnd, lParam);
 		}
-		else if(wParam != SIZE_MAXIMIZED && m_bMaximized == true)
+		else if (wParam != SIZE_MAXIMIZED && this->m_bMaximized == true)
 		{
 			m_bMaximized = false;
-			::SendMessage(m_hWndMDIClient, UWM_MDICHILDUNMAXIMIZED, (WPARAM)m_hWnd, lParam);
+			::SendMessage(this->m_hWndMDIClient, UWM_MDICHILDUNMAXIMIZED, (WPARAM)m_hWnd, lParam);
 		}
 
 		bHandled = FALSE;
@@ -570,14 +567,14 @@ public:
 	LRESULT OnMouseActivate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& /*bHandled*/)
 	{
 		LRESULT lRes = this->DefWindowProc(uMsg, wParam, lParam);
-		if(lRes == MA_NOACTIVATE || lRes == MA_NOACTIVATEANDEAT)
-			return lRes;   // frame does not want to activate
+		if (lRes == MA_NOACTIVATE || lRes == MA_NOACTIVATEANDEAT)
+			return lRes; // frame does not want to activate
 
 		// activate window if necessary
 		HWND hWndActive = this->MDIGetActive();
-		if(m_hWnd != hWndActive)
+		if (this->m_hWnd != hWndActive)
 		{
-			this->MDIActivate(m_hWnd);
+			this->MDIActivate(this->m_hWnd);
 		}
 
 		return lRes;
@@ -585,11 +582,11 @@ public:
 
 	LRESULT OnSetFocus(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
 	{
-		// NOTE: ::IsWindowVisible(m_hWndClient) will be false if
+		// NOTE: ::IsWindowVisible(this->m_hWndClient) will be false if
 		//  the frame is maximized.  So just use "IsWindow" instead.
-		if(m_hWndClient != NULL && ::IsWindow(m_hWndClient))
+		if (this->m_hWndClient != NULL && ::IsWindow(this->m_hWndClient))
 		{
-			::SetFocus(m_hWndClient);
+			::SetFocus(this->m_hWndClient);
 		}
 
 		bHandled = FALSE;
@@ -619,16 +616,16 @@ public:
 		//  problem, we won't even try to use TPM_VERPOSANIMATION.
 		WTL::CMenuHandle menu = this->GetSystemMenu(FALSE);
 
-		UINT command = (UINT)menu.TrackPopupMenu(TPM_LEFTBUTTON | TPM_VERTICAL | TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RETURNCMD, 
-			GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), m_hWnd);
+		UINT command = (UINT)menu.TrackPopupMenu(TPM_LEFTBUTTON | TPM_VERTICAL | TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RETURNCMD,
+			GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), this->m_hWnd);
 
 		// See MSDN about "GetSystemMenu".  Returns codes greater than
 		//  0xF000 (which happens to be SC_SIZE) are sent with WM_SYSCOMMAND
-		if(command >= SC_SIZE)
+		if (command >= SC_SIZE)
 		{
-			::PostMessage(m_hWnd, WM_SYSCOMMAND, command, 0L);
+			::PostMessage(this->m_hWnd, WM_SYSCOMMAND, command, 0L);
 		}
-		else if(command != 0)
+		else if (command != 0)
 		{
 			// Non SC_* commands don't work with WM_SYSCOMMAND.  We could handle
 			// the situation here by using WM_COMMAND, but there's other places
@@ -638,9 +635,9 @@ public:
 			// implementation, you should override handling UWM_MDICHILDSHOWTABCONTEXTMENU
 			// in a derived class, and do your own context menu there.
 			// See the "TabDemo" sample for an example.
-			ATLASSERT(0 && 
-				"You've tried to put a non SC_* command in the window menu.  "
-				"Please override the default context menu handling, and use a custom menu.");
+			ATLASSERT(0 &&
+					  "You've tried to put a non SC_* command in the window menu.  "
+					  "Please override the default context menu handling, and use a custom menu.");
 		}
 
 		return 0;
@@ -674,10 +671,9 @@ public:
 //
 /////////////////////////////////////////////////////////////////////////////
 
-template< class T, class TTabCtrl >
-class CMDITabOwnerImpl :
-	public ATL::CWindowImpl<T>,
-	public CCustomTabOwnerImpl<T, TTabCtrl>
+template <class T, class TTabCtrl>
+class CMDITabOwnerImpl : public ATL::CWindowImpl<T>,
+						 public CCustomTabOwnerImpl<T, TTabCtrl>
 {
 public:
 	// Expose the type of tab control
@@ -688,13 +684,13 @@ protected:
 	typedef ATL::CWindowImpl<T> baseClass;
 	typedef CCustomTabOwnerImpl<T, TTabCtrl> customTabOwnerClass;
 
-// Member variables
+	// Member variables
 protected:
 	HWND m_hWndMDIClient;
 	DWORD m_nTabStyles;
 	BOOL m_bHideMDITabsWhenMDIChildNotMaximized;
 
-// Constructors
+	// Constructors
 public:
 	CMDITabOwnerImpl() :
 		m_hWndMDIClient(NULL),
@@ -702,11 +698,11 @@ public:
 		m_bHideMDITabsWhenMDIChildNotMaximized(FALSE)
 	{
 		ATLASSERT(UWM_MDICHILDACTIVATIONCHANGE != 0 && "The TabbedMDI Messages didn't get registered properly");
-		m_nMinTabCountForVisibleTabs = 1;
-		m_bKeepTabsHidden = (m_nMinTabCountForVisibleTabs > 0);
+		this->m_nMinTabCountForVisibleTabs = 1;
+		this->m_bKeepTabsHidden = (this->m_nMinTabCountForVisibleTabs > 0);
 	}
 
-// Methods
+	// Methods
 public:
 	void SetMDIClient(HWND hWndMDIClient)
 	{
@@ -720,13 +716,13 @@ public:
 
 	DWORD GetTabStyles(void) const
 	{
-		return m_nTabStyles;
+		return this->m_nTabStyles;
 	}
 
 	void ModifyTabStyles(DWORD dwRemove, DWORD dwAdd)
 	{
 		DWORD dwNewStyle = (m_nTabStyles & ~dwRemove) | dwAdd;
-		if(m_nTabStyles != dwNewStyle)
+		if (m_nTabStyles != dwNewStyle)
 		{
 			m_nTabStyles = dwNewStyle;
 		}
@@ -737,16 +733,15 @@ public:
 		m_bHideMDITabsWhenMDIChildNotMaximized = bHideMDITabsWhenMDIChildNotMaximized;
 	}
 
-// Overrideables
+	// Overrideables
 public:
-
 	void ForceShowMDITabControl()
 	{
-		if(m_hWnd && !this->IsWindowVisible())
+		if (this->m_hWnd && !this->IsWindowVisible())
 		{
 			RECT rcMDIClient;
-			::GetWindowRect(m_hWndMDIClient, &rcMDIClient);
-			::MapWindowPoints(NULL, ::GetParent(m_hWndMDIClient), (LPPOINT)&rcMDIClient, 2);
+			::GetWindowRect(this->m_hWndMDIClient, &rcMDIClient);
+			::MapWindowPoints(NULL, ::GetParent(this->m_hWndMDIClient), (LPPOINT)&rcMDIClient, 2);
 
 			this->ShowWindow(SW_SHOW);
 
@@ -755,24 +750,24 @@ public:
 			::SetWindowPos(
 				m_hWndMDIClient, NULL,
 				rcMDIClient.left, rcMDIClient.top,
-				(rcMDIClient.right - rcMDIClient.left),(rcMDIClient.bottom - rcMDIClient.top),
+				(rcMDIClient.right - rcMDIClient.left), (rcMDIClient.bottom - rcMDIClient.top),
 				SWP_NOZORDER);
 		}
 	}
 
 	void ForceHideMDITabControl()
 	{
-		if(m_hWnd && this->IsWindowVisible())
+		if (this->m_hWnd && this->IsWindowVisible())
 		{
 			RECT rcTabs;
 			m_TabCtrl.GetWindowRect(&rcTabs);
-			::MapWindowPoints(NULL, m_TabCtrl.GetParent(), (LPPOINT)&rcTabs, 2);
+			::MapWindowPoints(NULL, this->m_TabCtrl.GetParent(), (LPPOINT)&rcTabs, 2);
 
 			this->ShowWindow(SW_HIDE);
 
 			RECT rcMDIClient;
-			::GetWindowRect(m_hWndMDIClient, &rcMDIClient);
-			::MapWindowPoints(NULL, ::GetParent(m_hWndMDIClient), (LPPOINT)&rcMDIClient, 2);
+			::GetWindowRect(this->m_hWndMDIClient, &rcMDIClient);
+			::MapWindowPoints(NULL, ::GetParent(this->m_hWndMDIClient), (LPPOINT)&rcMDIClient, 2);
 
 			// the MDI client resizes and shows our window when
 			//  handling messages related to SetWindowPos
@@ -781,8 +776,8 @@ public:
 			//  We're basically hiding the tabs and
 			//  resizing the MDI client area to "cover up"
 			//  where the tabs were
-			DWORD dwStyle = m_TabCtrl.GetStyle();
-			if(CTCS_BOTTOM == (dwStyle & CTCS_BOTTOM))
+			DWORD dwStyle = this->m_TabCtrl.GetStyle();
+			if (CTCS_BOTTOM == (dwStyle & CTCS_BOTTOM))
 			{
 				::SetWindowPos(
 					m_hWndMDIClient, NULL,
@@ -805,10 +800,10 @@ public:
 
 	void ShowTabControlIfChildMaximized(void)
 	{
-		if(m_bHideMDITabsWhenMDIChildNotMaximized)
+		if (m_bHideMDITabsWhenMDIChildNotMaximized)
 		{
-			size_t nTabCount = m_TabCtrl.GetItemCount();
-			if(nTabCount >= m_nMinTabCountForVisibleTabs)
+			size_t nTabCount = this->m_TabCtrl.GetItemCount();
+			if (nTabCount >= this->m_nMinTabCountForVisibleTabs)
 			{
 				T* pT = static_cast<T*>(this);
 				pT->ShowTabControl();
@@ -818,16 +813,15 @@ public:
 
 	void HideTabControlIfChildNotMaximized(void)
 	{
-		if(m_bHideMDITabsWhenMDIChildNotMaximized)
+		if (m_bHideMDITabsWhenMDIChildNotMaximized)
 		{
 			T* pT = static_cast<T*>(this);
 			pT->HideTabControl();
 		}
 	}
 
-// Message Handling
 public:
-	DECLARE_WND_CLASS_EX(_T("MdiTabOwner"), 0, COLOR_APPWORKSPACE)
+	DECLARE_WND_CLASS_EX2(_T("MdiTabOwner"), CMDITabOwnerImpl, 0, COLOR_APPWORKSPACE)
 
 	BEGIN_MSG_MAP(thisClass)
 		MESSAGE_HANDLER(WM_CREATE, OnCreate)
@@ -853,12 +847,12 @@ public:
 		// "baseClass::OnCreate()"
 		LRESULT lRet = this->DefWindowProc(uMsg, wParam, lParam);
 		bHandled = TRUE;
-		if(lRet == -1)
+		if (lRet == -1)
 		{
 			return -1;
 		}
 
-		CreateTabWindow(m_hWnd, rcDefault, m_nTabStyles);
+		CreateTabWindow(this->m_hWnd, rcDefault, this->m_nTabStyles);
 
 		return 0;
 	}
@@ -875,7 +869,7 @@ public:
 
 	LRESULT OnEraseBackground(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
 	{
-		if(m_TabCtrl)
+		if (m_TabCtrl)
 		{
 			// Let the tabs do all the drawing as flicker-free as possible
 			return 1;
@@ -905,36 +899,36 @@ public:
 		int nIndex = -1;
 
 		POINT ptPopup = {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
-		if(ptPopup.x == -1 && ptPopup.y == -1)
+		if (ptPopup.x == -1 && ptPopup.y == -1)
 		{
-			nIndex = m_TabCtrl.GetCurSel();
+			nIndex = this->m_TabCtrl.GetCurSel();
 			RECT rect = {0};
-			if(nIndex >= 0)
+			if (nIndex >= 0)
 			{
 				// If there is a selected item, popup the menu under the node,
 				// if not, pop it up in the top left of the tree view
 				m_TabCtrl.GetItemRect(nIndex, &rect);
 			}
-			::MapWindowPoints(m_hWnd, NULL, (LPPOINT)&rect, 2);
+			::MapWindowPoints(this->m_hWnd, NULL, (LPPOINT)&rect, 2);
 			ptPopup.x = rect.left;
 			ptPopup.y = rect.bottom;
 		}
 		else
 		{
 			POINT ptClient = ptPopup;
-			::MapWindowPoints(NULL, m_hWnd, &ptClient, 1);
-			CTCHITTESTINFO tchti = { 0 };
+			::MapWindowPoints(NULL, this->m_hWnd, &ptClient, 1);
+			CTCHITTESTINFO tchti = {0};
 			tchti.pt = ptClient;
 			//If we become templated, pT->HitTest(&tchti);
-			nIndex = m_TabCtrl.HitTest(&tchti);
+			nIndex = this->m_TabCtrl.HitTest(&tchti);
 		}
 
-		if( nIndex >= 0 )
+		if (nIndex >= 0)
 		{
-			TTabCtrl::TItem* pItem = m_TabCtrl.GetItem(nIndex);
+			TTabCtrl::TItem* pItem = this->m_TabCtrl.GetItem(nIndex);
 
 			HWND hWndChild = pItem->GetTabView();
-			if(hWndChild != NULL)
+			if (hWndChild != NULL)
 			{
 				::SendMessage(hWndChild, UWM_MDICHILDSHOWTABCONTEXTMENU, wParam, MAKELPARAM(ptPopup.x, ptPopup.y));
 			}
@@ -947,17 +941,17 @@ public:
 	{
 		// Be sure the notification is from the tab control
 		// (and not from a sibling like a list view control)
-		if(pnmh && (m_TabCtrl == pnmh->hwndFrom))
+		if (pnmh && (m_TabCtrl == pnmh->hwndFrom))
 		{
 			// If they left click on an item, set focus on the tab view,
 			// but only if the view was already the active tab view
 			// (otherwise our code to reduce flicker when switching
 			// MDI children when maximized doesn't kick in).
 			NMCTCITEM* item = (NMCTCITEM*)pnmh;
-			if(item && (item->iItem >= 0) && (item->iItem == m_TabCtrl.GetCurSel()))
+			if (item && (item->iItem >= 0) && (item->iItem == this->m_TabCtrl.GetCurSel()))
 			{
-				TTabCtrl::TItem* pItem = m_TabCtrl.GetItem(item->iItem);
-				if(pItem->UsingTabView())
+				TTabCtrl::TItem* pItem = this->m_TabCtrl.GetItem(item->iItem);
+				if (pItem->UsingTabView())
 				{
 					::SetFocus(pItem->GetTabView());
 				}
@@ -972,14 +966,14 @@ public:
 	{
 		// Be sure the notification is from the tab control
 		// (and not from a sibling like a list view control)
-		if(pnmh && (m_TabCtrl == pnmh->hwndFrom))
+		if (pnmh && (m_TabCtrl == pnmh->hwndFrom))
 		{
 			// If finished dragging, set focus on the tab view.
 			NMCTC2ITEMS* item = (NMCTC2ITEMS*)pnmh;
-			if(item && (item->iItem2 >= 0))
+			if (item && (item->iItem2 >= 0))
 			{
-				TTabCtrl::TItem* pItem = m_TabCtrl.GetItem(item->iItem2);
-				if(pItem->UsingTabView())
+				TTabCtrl::TItem* pItem = this->m_TabCtrl.GetItem(item->iItem2);
+				if (pItem->UsingTabView())
 				{
 					::SetFocus(pItem->GetTabView());
 				}
@@ -994,14 +988,14 @@ public:
 	{
 		// Be sure the notification is from the tab control
 		// (and not from a sibling like a list view control)
-		if(pnmh && (m_TabCtrl == pnmh->hwndFrom))
+		if (pnmh && (m_TabCtrl == pnmh->hwndFrom))
 		{
 			// If finished dragging, set focus on the tab view.
 			NMCTCITEM* item = (NMCTCITEM*)pnmh;
-			if(item && (item->iItem >= 0))
+			if (item && (item->iItem >= 0))
 			{
-				TTabCtrl::TItem* pItem = m_TabCtrl.GetItem(item->iItem);
-				if(pItem->UsingTabView())
+				TTabCtrl::TItem* pItem = this->m_TabCtrl.GetItem(item->iItem);
+				if (pItem->UsingTabView())
 				{
 					::SetFocus(pItem->GetTabView());
 				}
@@ -1016,7 +1010,7 @@ public:
 	{
 		// Be sure the notification is from the tab control
 		// (and not from a sibling like a list view control)
-		if(pnmh && (m_TabCtrl == pnmh->hwndFrom))
+		if (pnmh && (m_TabCtrl == pnmh->hwndFrom))
 		{
 		}
 
@@ -1028,7 +1022,7 @@ public:
 	{
 		// Be sure the notification is from the tab control
 		// (and not from a sibling like a list view control)
-		if(pnmh && (m_TabCtrl == pnmh->hwndFrom))
+		if (pnmh && (m_TabCtrl == pnmh->hwndFrom))
 		{
 		}
 
@@ -1040,18 +1034,18 @@ public:
 	{
 		// Be sure the notification is from the tab control
 		// (and not from a sibling like a list view control)
-		if(pnmh && (m_TabCtrl == pnmh->hwndFrom))
+		if (pnmh && (m_TabCtrl == pnmh->hwndFrom))
 		{
-			int nNewTab = m_TabCtrl.GetCurSel();
+			int nNewTab = this->m_TabCtrl.GetCurSel();
 
-			if(nNewTab >= 0)
+			if (nNewTab >= 0)
 			{
-				TTabCtrl::TItem* pItem = m_TabCtrl.GetItem(nNewTab);
-				if(pItem->UsingTabView())
+				TTabCtrl::TItem* pItem = this->m_TabCtrl.GetItem(nNewTab);
+				if (pItem->UsingTabView())
 				{
 					HWND hWndNew = pItem->GetTabView();
-					HWND hWndOld = (HWND)::SendMessage(m_hWndMDIClient, WM_MDIGETACTIVE, 0, NULL);
-					if( hWndNew != hWndOld )
+					HWND hWndOld = (HWND)::SendMessage(this->m_hWndMDIClient, WM_MDIGETACTIVE, 0, NULL);
+					if (hWndNew != hWndOld)
 					{
 						// We don't want any flickering when switching the active child
 						//  when the child is maximized (when its not maximized, there's no flicker).
@@ -1073,25 +1067,25 @@ public:
 						WINDOWPLACEMENT wpOld = {0};
 						wpOld.length = sizeof(WINDOWPLACEMENT);
 						::GetWindowPlacement(hWndOld, &wpOld);
-						if(wpOld.showCmd == SW_SHOWMAXIMIZED)
+						if (wpOld.showCmd == SW_SHOWMAXIMIZED)
 						{
-							nResult = ::SendMessage(m_hWndMDIClient, WM_SETREDRAW, FALSE, 0);
+							nResult = ::SendMessage(this->m_hWndMDIClient, WM_SETREDRAW, FALSE, 0);
 						}
 
-						nResult = ::SendMessage(m_hWndMDIClient, WM_MDIACTIVATE, (LPARAM)hWndNew, 0);
+						nResult = ::SendMessage(this->m_hWndMDIClient, WM_MDIACTIVATE, (LPARAM)hWndNew, 0);
 
 						WINDOWPLACEMENT wpNew = {0};
 						wpNew.length = sizeof(WINDOWPLACEMENT);
 						::GetWindowPlacement(hWndNew, &wpNew);
-						if(wpNew.showCmd == SW_SHOWMINIMIZED)
+						if (wpNew.showCmd == SW_SHOWMINIMIZED)
 						{
 							::ShowWindow(hWndNew, SW_RESTORE);
 						}
 
-						if(wpOld.showCmd == SW_SHOWMAXIMIZED)
+						if (wpOld.showCmd == SW_SHOWMAXIMIZED)
 						{
-							nResult = ::SendMessage(m_hWndMDIClient, WM_SETREDRAW, TRUE, 0);
-							::RedrawWindow(m_hWndMDIClient, NULL, NULL,
+							nResult = ::SendMessage(this->m_hWndMDIClient, WM_SETREDRAW, TRUE, 0);
+							::RedrawWindow(this->m_hWndMDIClient, NULL, NULL,
 								//A little more forceful if necessary: RDW_ERASE | RDW_INVALIDATE | RDW_UPDATENOW | RDW_ALLCHILDREN);
 								RDW_INVALIDATE | RDW_ALLCHILDREN);
 						}
@@ -1108,15 +1102,15 @@ public:
 	{
 		// Be sure the notification is from the tab control
 		// (and not from a sibling like a list view control)
-		if(pnmh && (m_TabCtrl == pnmh->hwndFrom))
+		if (pnmh && (m_TabCtrl == pnmh->hwndFrom))
 		{
 			LPNMCTCITEM pnmCustomTab = (LPNMCTCITEM)pnmh;
-			if(pnmCustomTab)
+			if (pnmCustomTab)
 			{
-				if(pnmCustomTab->iItem >= 0)
+				if (pnmCustomTab->iItem >= 0)
 				{
-					TTabCtrl::TItem* pItem = m_TabCtrl.GetItem(pnmCustomTab->iItem);
-					if(pItem)
+					TTabCtrl::TItem* pItem = this->m_TabCtrl.GetItem(pnmCustomTab->iItem);
+					if (pItem)
 					{
 						::PostMessage(pItem->GetTabView(), WM_SYSCOMMAND, SC_CLOSE, 0L);
 					}
@@ -1128,16 +1122,15 @@ public:
 		return 0;
 	}
 
-// Overrides from CCustomTabOwnerImpl
+	// Overrides from CCustomTabOwnerImpl
 public:
-
 	void ShowTabControl()
 	{
 		T* pT = static_cast<T*>(this);
-		if(m_bHideMDITabsWhenMDIChildNotMaximized && m_hWndMDIClient)
+		if (m_bHideMDITabsWhenMDIChildNotMaximized && this->m_hWndMDIClient)
 		{
-			HWND hWndActiveChild = (HWND)::SendMessage(m_hWndMDIClient, WM_MDIGETACTIVE, 0, 0);
-			if(hWndActiveChild && ::IsZoomed(hWndActiveChild))
+			HWND hWndActiveChild = (HWND)::SendMessage(this->m_hWndMDIClient, WM_MDIGETACTIVE, 0, 0);
+			if (hWndActiveChild && ::IsZoomed(hWndActiveChild))
 			{
 				pT->KeepTabsHidden(false);
 			}
@@ -1156,9 +1149,9 @@ public:
 
 	void KeepTabsHidden(bool bKeepTabsHidden = true)
 	{
-		if(m_bKeepTabsHidden != bKeepTabsHidden)
+		if (this->m_bKeepTabsHidden != bKeepTabsHidden)
 		{
-			m_bKeepTabsHidden = bKeepTabsHidden;
+			this->m_bKeepTabsHidden = bKeepTabsHidden;
 
 			// CalcTabAreaHeight will end up doing UpdateLayout and Invalidate
 			T* pT = static_cast<T*>(this);
@@ -1167,7 +1160,7 @@ public:
 			// For MDI tabs, the UpdateLayout done by CalcTabAreaHeight
 			//  is not quite enough to force the tab control to show or hide.
 			//  So we'll force the tab control to be shown or hidden.
-			if(m_bKeepTabsHidden)
+			if (this->m_bKeepTabsHidden)
 			{
 				pT->ForceHideMDITabControl();
 			}
@@ -1180,28 +1173,28 @@ public:
 
 	void SetTabAreaHeight(int nNewTabAreaHeight)
 	{
-		if(m_bKeepTabsHidden)
+		if (this->m_bKeepTabsHidden)
 		{
-			m_nTabAreaHeight = 0;
+			this->m_nTabAreaHeight = 0;
 
 			//T* pT = static_cast<T*>(this);
 			//pT->UpdateLayout();
 			//Invalidate();
 		}
-		else if(m_nTabAreaHeight != nNewTabAreaHeight)
+		else if (this->m_nTabAreaHeight != nNewTabAreaHeight)
 		{
-			int nOldTabAreaHeight = m_nTabAreaHeight;
+			int nOldTabAreaHeight = this->m_nTabAreaHeight;
 
-			m_nTabAreaHeight = nNewTabAreaHeight;
+			this->m_nTabAreaHeight = nNewTabAreaHeight;
 
 			//T* pT = static_cast<T*>(this);
 			//pT->UpdateLayout();
 			//Invalidate();
 
-			if(this->IsWindowVisible() == TRUE)
+			if (this->IsWindowVisible() == TRUE)
 			{
 				RECT rcMDIClient;
-				::GetWindowRect(m_hWndMDIClient, &rcMDIClient);
+				::GetWindowRect(this->m_hWndMDIClient, &rcMDIClient);
 				::MapWindowPoints(NULL, this->GetParent(), (LPPOINT)&rcMDIClient, 2);
 
 				// Don't ask me why these two lines are necessary.
@@ -1215,16 +1208,15 @@ public:
 				::SetWindowPos(
 					m_hWndMDIClient, NULL,
 					rcMDIClient.left, rcMDIClient.top,
-					(rcMDIClient.right - rcMDIClient.left),(rcMDIClient.bottom - rcMDIClient.top),
+					(rcMDIClient.right - rcMDIClient.left), (rcMDIClient.bottom - rcMDIClient.top),
 					SWP_NOZORDER | SWP_NOACTIVATE);
 			}
 		}
 	}
 };
 
-template< class TTabCtrl >
-class CMDITabOwner :
-	public CMDITabOwnerImpl<CMDITabOwner<TTabCtrl>, TTabCtrl>
+template <class TTabCtrl>
+class CMDITabOwner : public CMDITabOwnerImpl<CMDITabOwner<TTabCtrl>, TTabCtrl>
 {
 };
 
@@ -1234,7 +1226,7 @@ class CMDITabOwner :
 //
 /////////////////////////////////////////////////////////////////////////////
 
-template< class TTabCtrl = CDotNetTabCtrl<CTabViewTabItem>, class TTabOwner = CMDITabOwner<TTabCtrl> >
+template <class TTabCtrl = CDotNetTabCtrl<CTabViewTabItem>, class TTabOwner = CMDITabOwner<TTabCtrl>>
 class CTabbedMDIClient : public ATL::CWindowImpl<CTabbedMDIClient<TTabCtrl, TTabOwner>, ATL::CWindow>
 {
 public:
@@ -1244,9 +1236,9 @@ public:
 
 protected:
 	typedef ATL::CWindowImpl<CTabbedMDIClient, ATL::CWindow> baseClass;
-	typedef CTabbedMDIClient< TTabCtrl, TTabOwner > thisClass;
+	typedef CTabbedMDIClient<TTabCtrl, TTabOwner> thisClass;
 
-// Member variables
+	// Member variables
 protected:
 	HWND m_hWndTabOwnerParent;
 	TTabOwner m_MdiTabOwner;
@@ -1254,7 +1246,7 @@ protected:
 	bool m_bSubclassed;
 	bool m_bDrawFlat;
 
-// Constructors
+	// Constructors
 public:
 	CTabbedMDIClient() :
 		m_hWndTabOwnerParent(NULL),
@@ -1263,21 +1255,21 @@ public:
 		m_bDrawFlat(false)
 	{
 		ATLASSERT(UWM_MDICHILDACTIVATIONCHANGE != 0 && "The TabbedMDI Messages didn't get registered properly");
-		if(m_bDrawFlat)
+		if (m_bDrawFlat)
 		{
-			m_MdiTabOwner.ModifyTabStyles(0,CTCS_FLATEDGE);
+			m_MdiTabOwner.ModifyTabStyles(0, CTCS_FLATEDGE);
 		}
 	}
 
 	virtual ~CTabbedMDIClient()
 	{
-		if(this->IsWindow() && m_bSubclassed)
+		if (this->IsWindow() && this->m_bSubclassed)
 		{
 			this->UnsubclassWindow(TRUE);
 		}
 	}
 
-// Methods
+	// Methods
 public:
 	void SetTabOwnerParent(HWND hWndTabOwnerParent)
 	{
@@ -1286,12 +1278,12 @@ public:
 
 	HWND GetTabOwnerParent(void) const
 	{
-		return m_hWndTabOwnerParent;
+		return this->m_hWndTabOwnerParent;
 	}
 
 	TTabOwner& GetTabOwner(void)
 	{
-		return m_MdiTabOwner;
+		return this->m_MdiTabOwner;
 	}
 
 	void UseMDIChildIcon(BOOL bUseMDIChildIcon = TRUE)
@@ -1306,52 +1298,52 @@ public:
 
 	void SetDrawFlat(bool bDrawFlat = true)
 	{
-		if(m_bDrawFlat!=bDrawFlat)
+		if (m_bDrawFlat != bDrawFlat)
 		{
-			//ATLASSERT((m_hWnd==NULL) && "Please call SetDrawFlat before CreateWindow or SubclassWindow");
+			//ATLASSERT((this->m_hWnd==NULL) && "Please call SetDrawFlat before CreateWindow or SubclassWindow");
 			m_bDrawFlat = bDrawFlat;
-			if(m_bDrawFlat)
+			if (m_bDrawFlat)
 			{
-				m_MdiTabOwner.ModifyTabStyles(0,CTCS_FLATEDGE);
+				m_MdiTabOwner.ModifyTabStyles(0, CTCS_FLATEDGE);
 			}
 			else
 			{
-				m_MdiTabOwner.ModifyTabStyles(CTCS_FLATEDGE,0);
+				m_MdiTabOwner.ModifyTabStyles(CTCS_FLATEDGE, 0);
 			}
 		}
 	}
 
 	bool GetDrawFlat(void) const
 	{
-		return m_bDrawFlat;
+		return this->m_bDrawFlat;
 	}
 
 #ifdef __TabbedMDISave_h__
 
 	bool SaveAllModified(bool canPrompt, bool canCancel) const
 	{
-		if(canPrompt)
+		if (canPrompt)
 		{
 			// Prompt using our "Save modified" dialog
 			ATL::CComPtr<ITabbedMDIChildModifiedList> modifiedItems;
 			this->FindModified(&modifiedItems);
-			if(modifiedItems)
+			if (modifiedItems)
 			{
 				long modifiedCount = 0;
 				modifiedItems->get_Count(&modifiedCount);
-				if(modifiedCount > 0)
+				if (modifiedCount > 0)
 				{
 					CSaveModifiedItemsDialog dialog(modifiedItems, canCancel);
 
 					INT_PTR response = dialog.DoModal();
-					if(response == IDYES)
+					if (response == IDYES)
 					{
 						// The dialog will update the list and remove
 						// any items that the user unchecked
 
 						this->SaveModified(modifiedItems);
 					}
-					else if(response == IDCANCEL)
+					else if (response == IDCANCEL)
 					{
 						// Not safe to close
 						return false;
@@ -1363,8 +1355,8 @@ public:
 		{
 			// Save all files, but don't ask permission.
 
-			HWND hWndChild = ::GetTopWindow(m_hWnd);
-			while(hWndChild != NULL)
+			HWND hWndChild = ::GetTopWindow(this->m_hWnd);
+			while (hWndChild != NULL)
 			{
 				::SendMessage(hWndChild, UWM_MDICHILDSAVEMODIFIED, 0, 0);
 				hWndChild = ::GetNextWindow(hWndChild, GW_HWNDNEXT);
@@ -1377,9 +1369,9 @@ public:
 
 	HRESULT FindModified(ITabbedMDIChildModifiedList** modifiedItemsOut) const
 	{
-		WTL::CWaitCursor	waitCursor;
+		WTL::CWaitCursor waitCursor;
 
-		if(modifiedItemsOut == NULL)
+		if (modifiedItemsOut == NULL)
 		{
 			return E_POINTER;
 		}
@@ -1393,15 +1385,15 @@ public:
 		ATL::CComPtr<ITabbedMDIChildModifiedList> modifiedItems;
 		::CreateTabbedMDIChildModifiedList(&modifiedItems);
 
-		if(modifiedItems)
+		if (modifiedItems)
 		{
-			HWND hWndChild = ::GetTopWindow(m_hWnd);
-			while(hWndChild != NULL)
+			HWND hWndChild = ::GetTopWindow(this->m_hWnd);
+			while (hWndChild != NULL)
 			{
 				_CSTRING_NS::CString windowText;
 				int cchWindowText = ::GetWindowTextLength(hWndChild);
-				LPTSTR pszText = windowText.GetBuffer(cchWindowText+1);
-				cchWindowText = ::GetWindowText(hWndChild, pszText, cchWindowText+1);
+				LPTSTR pszText = windowText.GetBuffer(cchWindowText + 1);
+				cchWindowText = ::GetWindowText(hWndChild, pszText, cchWindowText + 1);
 				windowText.ReleaseBuffer(cchWindowText);
 
 				CComBSTR defaultName(windowText);
@@ -1411,7 +1403,7 @@ public:
 					defaultName, defaultName, defaultName, 0, NULL, &modifiedItem);
 
 				BOOL bIsModified = (BOOL)::SendMessage(hWndChild, UWM_MDICHILDISMODIFIED, 0, (LPARAM)modifiedItem.p);
-				if(bIsModified)
+				if (bIsModified)
 				{
 					++modifiedCount;
 
@@ -1421,7 +1413,7 @@ public:
 				hWndChild = ::GetNextWindow(hWndChild, GW_HWNDNEXT);
 			}
 
-			if(modifiedCount > 0)
+			if (modifiedCount > 0)
 			{
 				modifiedItems.CopyTo(modifiedItemsOut);
 			}
@@ -1432,7 +1424,7 @@ public:
 
 	HRESULT SaveModified(ITabbedMDIChildModifiedList* modifiedItems) const
 	{
-		if(modifiedItems == NULL)
+		if (modifiedItems == NULL)
 		{
 			return E_INVALIDARG;
 		}
@@ -1443,15 +1435,15 @@ public:
 
 		long count = 0;
 		modifiedItems->get_Count(&count);
-		for(long i=0; i<count; ++i)
+		for (long i = 0; i < count; ++i)
 		{
 			ATL::CComPtr<ITabbedMDIChildModifiedItem> modifiedItem;
 			modifiedItems->get_Item(i, &modifiedItem);
-			if(modifiedItem)
+			if (modifiedItem)
 			{
 				HWND hWnd = NULL;
 				modifiedItem->get_Window(&hWnd);
-				if(hWnd && ::IsWindow(hWnd))
+				if (hWnd && ::IsWindow(hWnd))
 				{
 					::SendMessage(hWnd, UWM_MDICHILDSAVEMODIFIED, 0, (LPARAM)modifiedItem.p);
 				}
@@ -1464,23 +1456,23 @@ public:
 
 		return hr;
 	}
-	
+
 #endif // __TabbedMDISave_h__
 
 	void CloseAll(bool bPreferNoPrompt = false) const
 	{
-		HWND hWndChild = ::GetTopWindow(m_hWnd);
-		while(hWndChild != NULL)
+		HWND hWndChild = ::GetTopWindow(this->m_hWnd);
+		while (hWndChild != NULL)
 		{
 			HWND hWndClose = hWndChild;
 			hWndChild = ::GetNextWindow(hWndChild, GW_HWNDNEXT);
 
-			if(bPreferNoPrompt)
+			if (bPreferNoPrompt)
 			{
 				::SendMessage(hWndClose, UWM_MDICHILDCLOSEWITHNOPROMPT, 0, 0L);
 			}
 
-			if(::IsWindow(hWndClose))
+			if (::IsWindow(hWndClose))
 			{
 				// The window doesn't support UWM_MDICHILDCLOSEWITHNOPROMPT
 				// or the caller didn't want to close with no prompt,
@@ -1513,9 +1505,9 @@ public:
 protected:
 	void InitTabs()
 	{
-		if( !m_MdiTabOwner.IsWindow() )
+		if (!m_MdiTabOwner.IsWindow())
 		{
-			if(m_hWndTabOwnerParent == NULL)
+			if (this->m_hWndTabOwnerParent == NULL)
 			{
 				// If the tab owner's parent is not specified,
 				// have the tabs as a sibling
@@ -1523,16 +1515,16 @@ protected:
 			}
 
 			m_MdiTabOwner.Create(
-				m_hWndTabOwnerParent, 
+				m_hWndTabOwnerParent,
 				rcDefault, NULL,
 				WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN // start out not visible
-				);
+			);
 
-			m_MdiTabOwner.SetMDIClient(m_hWnd);
+			m_MdiTabOwner.SetMDIClient(this->m_hWnd);
 		}
 	}
 
-// Message Handling
+	// Message Handling
 public:
 	DECLARE_WND_SUPERCLASS(_T("TabbedMDIClient"), _T("MDIClient"))
 
@@ -1556,7 +1548,7 @@ public:
 		// "base::OnCreate()"
 		LRESULT lRet = this->DefWindowProc(uMsg, wParam, lParam);
 		bHandled = TRUE;
-		if(lRet == -1)
+		if (lRet == -1)
 		{
 			return -1;
 		}
@@ -1593,16 +1585,16 @@ public:
 	LRESULT OnWindowPosChanging(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 	{
 		LPWINDOWPOS pWinPos = reinterpret_cast<LPWINDOWPOS>(lParam);
-		if(pWinPos)
+		if (pWinPos)
 		{
-			if( m_MdiTabOwner.IsWindow() )
+			if (m_MdiTabOwner.IsWindow())
 			{
 				//ATLTRACE(_T("Resizing MDI tab and MDI client\n"));
-				int nTabAreaHeight = (m_MdiTabOwner.IsWindowVisible()) ? m_MdiTabOwner.GetTabAreaHeight() : 0;
+				int nTabAreaHeight = (m_MdiTabOwner.IsWindowVisible()) ? this->m_MdiTabOwner.GetTabAreaHeight() : 0;
 
-				TTabCtrl& TabCtrl = m_MdiTabOwner.GetTabCtrl();
+				TTabCtrl& TabCtrl = this->m_MdiTabOwner.GetTabCtrl();
 				DWORD dwStyle = TabCtrl.GetStyle();
-				if(CTCS_BOTTOM == (dwStyle & CTCS_BOTTOM))
+				if (CTCS_BOTTOM == (dwStyle & CTCS_BOTTOM))
 				{
 					m_MdiTabOwner.SetWindowPos(
 						NULL,
@@ -1610,7 +1602,7 @@ public:
 						pWinPos->cx, nTabAreaHeight,
 						(pWinPos->flags & SWP_NOMOVE) | (pWinPos->flags & SWP_NOSIZE) | SWP_NOZORDER | SWP_NOACTIVATE);
 
-					if((pWinPos->flags & SWP_NOSIZE) == 0)
+					if ((pWinPos->flags & SWP_NOSIZE) == 0)
 					{
 						pWinPos->cy -= nTabAreaHeight;
 					}
@@ -1623,11 +1615,11 @@ public:
 						pWinPos->cx, nTabAreaHeight,
 						(pWinPos->flags & SWP_NOMOVE) | (pWinPos->flags & SWP_NOSIZE) | SWP_NOZORDER | SWP_NOACTIVATE);
 
-					if((pWinPos->flags & SWP_NOMOVE) == 0)
+					if ((pWinPos->flags & SWP_NOMOVE) == 0)
 					{
 						pWinPos->y += nTabAreaHeight;
 					}
-					if((pWinPos->flags & SWP_NOSIZE) == 0)
+					if ((pWinPos->flags & SWP_NOSIZE) == 0)
 					{
 						pWinPos->cy -= nTabAreaHeight;
 					}
@@ -1644,8 +1636,7 @@ public:
 
 	LRESULT OnNcPaint(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
 	{
-
-		if(m_bDrawFlat &&
+		if (m_bDrawFlat &&
 			WS_EX_CLIENTEDGE == (this->GetExStyle() & WS_EX_CLIENTEDGE))
 		{
 			// When we have WS_EX_CLIENTEDGE and drawing "flat",
@@ -1654,12 +1645,12 @@ public:
 			// on each edge, update the drawing code.
 
 			WTL::CWindowDC dc(this->m_hWnd);
-			if(dc)
+			if (dc)
 			{
 				RECT rcWindow;
 				this->GetWindowRect(&rcWindow);
 				::OffsetRect(&rcWindow, -rcWindow.left, -rcWindow.top);
-				dc.DrawEdge(&rcWindow, EDGE_ETCHED, BF_FLAT|BF_RECT);
+				dc.DrawEdge(&rcWindow, EDGE_ETCHED, BF_FLAT | BF_RECT);
 			}
 
 			/*
@@ -1697,7 +1688,7 @@ public:
 		//      so it wouldn't be reliable to rely on it
 		//   2. We don't need to.  Handling the change in child
 		//      activation to display the tab, if its not there,
-		//      creates, DisplayTab will create the corresponding tab. 
+		//      creates, DisplayTab will create the corresponding tab.
 
 		// Remove the tab for the child being destroyed.
 		//  Before removing the tab, we want the default happen,
@@ -1713,7 +1704,7 @@ public:
 		LRESULT lRet = this->DefWindowProc(uMsg, wParam, lParam);
 		bHandled = TRUE;
 
-		if(wParam != NULL)
+		if (wParam != NULL)
 		{
 			m_MdiTabOwner.RemoveTab((HWND)wParam);
 		}
@@ -1729,7 +1720,7 @@ public:
 		//  MDI Client to change the active child (such as clicking
 		//  a different MDI child to activate it).
 		//  However, the MDI *child* will *always* receive WM_MDIACTIVATE.
-		//  In fact, the child losing focus gets WM_MDIACTIVATE, 
+		//  In fact, the child losing focus gets WM_MDIACTIVATE,
 		//  and then the child gaining focus gets WM_MDIACTIVATE
 		//  (the "deactivating" and "activating" windows are sent as
 		//  the WPARAM and LPARAM both times).
@@ -1740,9 +1731,9 @@ public:
 		//  corresponding tab, or creating a tab for the child and
 		//  setting it as selected)
 
-		if(wParam != NULL)
+		if (wParam != NULL)
 		{
-			m_MdiTabOwner.DisplayTab((HWND)wParam, TRUE, m_bUseMDIChildIcon);
+			m_MdiTabOwner.DisplayTab((HWND)wParam, TRUE, this->m_bUseMDIChildIcon);
 		}
 
 		return 0;
@@ -1755,7 +1746,7 @@ public:
 		//  message (UWM_MDICHILDTABTEXTCHANGE) if they want to
 		//  update the text of the corresponding tab.
 
-		if(wParam != NULL)
+		if (wParam != NULL)
 		{
 			m_MdiTabOwner.UpdateTabText((HWND)wParam, (LPCTSTR)lParam);
 		}
@@ -1769,7 +1760,7 @@ public:
 		//  message (UWM_MDICHILDTABTOOLTIPCHANGE) with the tooltip
 		//  if that tooltip is something different than the tab text.
 
-		if(wParam != NULL)
+		if (wParam != NULL)
 		{
 			m_MdiTabOwner.UpdateTabToolTip((HWND)wParam, (LPCTSTR)lParam);
 		}
@@ -1781,7 +1772,7 @@ public:
 	{
 		HWND hWndMaximized = (HWND)wParam;
 		HWND hWndActiveChild = (HWND)this->SendMessage(WM_MDIGETACTIVE, 0, 0);
-		if(hWndMaximized == hWndActiveChild)
+		if (hWndMaximized == hWndActiveChild)
 		{
 			m_MdiTabOwner.ShowTabControlIfChildMaximized();
 		}
@@ -1793,7 +1784,7 @@ public:
 	{
 		HWND hWndUnMaximized = (HWND)wParam;
 		HWND hWndActiveChild = (HWND)this->SendMessage(WM_MDIGETACTIVE, 0, 0);
-		if(hWndUnMaximized == hWndActiveChild)
+		if (hWndUnMaximized == hWndActiveChild)
 		{
 			m_MdiTabOwner.HideTabControlIfChildNotMaximized();
 		}
@@ -1811,25 +1802,25 @@ protected:
 	typedef CMDICommandBarCtrlImpl<T, TBase, TWinTraits> baseClass;
 	typedef CCommandBarCtrlImpl<T, TBase, TWinTraits> grandparentClass;
 
-// Extended data
+	// Extended data
 protected:
-	bool m_bUseMaxChildDocIconAndFrameCaptionButtons:1;
+	bool m_bUseMaxChildDocIconAndFrameCaptionButtons : 1;
 
-// Constructors
+	// Constructors
 public:
 	CTabbedMDICommandBarCtrlImpl() :
 		m_bUseMaxChildDocIconAndFrameCaptionButtons(true)
 	{
 	}
 
-// Public methods
+	// Public methods
 public:
 	void UseMaxChildDocIconAndFrameCaptionButtons(bool bUseMaxChildDocIconAndFrameCaptionButtons = true)
 	{
 		m_bUseMaxChildDocIconAndFrameCaptionButtons = bUseMaxChildDocIconAndFrameCaptionButtons;
 	}
 
-// Overrides
+	// Overrides
 public:
 	void GetSystemSettings()
 	{
@@ -1837,11 +1828,11 @@ public:
 		m_cxLeft += 4;
 	}
 
-// Message Handling
+	// Message Handling
 public:
 	BEGIN_MSG_MAP(thisClass)
 
-		if(m_bUseMaxChildDocIconAndFrameCaptionButtons)
+		if (m_bUseMaxChildDocIconAndFrameCaptionButtons)
 		{
 			CHAIN_MSG_MAP(baseClass)
 		}
@@ -1850,9 +1841,9 @@ public:
 			CHAIN_MSG_MAP(grandparentClass)
 		}
 
-	ALT_MSG_MAP(1)		// Parent window messages
+		ALT_MSG_MAP(1) // Parent window messages
 
-		if(m_bUseMaxChildDocIconAndFrameCaptionButtons)
+		if (m_bUseMaxChildDocIconAndFrameCaptionButtons)
 		{
 			CHAIN_MSG_MAP_ALT(baseClass, 1)
 		}
@@ -1861,11 +1852,11 @@ public:
 			CHAIN_MSG_MAP_ALT(grandparentClass, 1)
 		}
 
-	ALT_MSG_MAP(2)		// MDI client window messages
+		ALT_MSG_MAP(2) // MDI client window messages
 
 		MESSAGE_HANDLER(WM_MDISETMENU, OnMDISetMenu)
 
-		if(m_bUseMaxChildDocIconAndFrameCaptionButtons)
+		if (m_bUseMaxChildDocIconAndFrameCaptionButtons)
 		{
 			MESSAGE_HANDLER(WM_MDIDESTROY, OnMDIDestroy)
 			MESSAGE_HANDLER(UWM_MDICHILDMAXIMIZED, OnChildMaximized)
@@ -1874,7 +1865,7 @@ public:
 		// NOTE: If future implementations of CMDICommandBarCtrlImpl
 		//  add MDI client related handlers for ALT_MSG_MAP(2),
 		//  either add them here or chain to the base
-	ALT_MSG_MAP(3)		// Message hook messages
+		ALT_MSG_MAP(3) // Message hook messages
 
 		// NOTE: We don't want to depend on the command bar's
 		//  hooked messages for telling us about maximization
@@ -1885,13 +1876,13 @@ public:
 
 	END_MSG_MAP()
 
-// MDI client window message handlers
+	// MDI client window message handlers
 	LRESULT OnMDISetMenu(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& /*bHandled*/)
 	{
 		m_wndMDIClient.DefWindowProc(uMsg, NULL, lParam);
 		HMENU hOldMenu = GetMenu();
 		BOOL bRet = AttachMenu((HMENU)wParam);
-		bRet;   // avoid level 4 warning
+		bRet; // avoid level 4 warning
 		ATLASSERT(bRet);
 
 #if (_WTL_VER >= 0x0710) && (_WIN32_IE >= 0x0400)
@@ -1906,17 +1897,17 @@ public:
 	{
 		HWND hWndChild = (HWND)wParam;
 
-		if(m_hWndChildMaximized == hWndChild)
+		if (this->m_hWndChildMaximized == hWndChild)
 		{
-			bool bMaxOld = m_bChildMaximized;
-			HICON hIconOld = m_hIconChildMaximized;
+			bool bMaxOld = this->m_bChildMaximized;
+			HICON hIconOld = this->m_hIconChildMaximized;
 
 			m_bChildMaximized = false;
 			m_hWndChildMaximized = NULL;
 			m_hIconChildMaximized = NULL;
 
 			T* pT = static_cast<T*>(this);
-			pT->RefreshMaximizedState((bMaxOld != m_bChildMaximized), (hIconOld != m_hIconChildMaximized));
+			pT->RefreshMaximizedState((bMaxOld != this->m_bChildMaximized), (hIconOld != this->m_hIconChildMaximized));
 		}
 
 		bHandled = FALSE;
@@ -1927,36 +1918,36 @@ public:
 	{
 		HWND hWndChild = (HWND)wParam;
 
-		bool bMaxOld = m_bChildMaximized;
-		HICON hIconOld = m_hIconChildMaximized;
+		bool bMaxOld = this->m_bChildMaximized;
+		HICON hIconOld = this->m_hIconChildMaximized;
 
 		m_bChildMaximized = true;
 
-		if(m_hWndChildMaximized != hWndChild)
+		if (this->m_hWndChildMaximized != hWndChild)
 		{
-			ATL::CWindow wnd = m_hWndChildMaximized = hWndChild;
+			ATL::CWindow wnd = this->m_hWndChildMaximized = hWndChild;
 			m_hIconChildMaximized = wnd.GetIcon(FALSE);
-			if(m_hIconChildMaximized == NULL)	// no icon set with WM_SETICON, get the class one
+			if (m_hIconChildMaximized == NULL) // no icon set with WM_SETICON, get the class one
 			{
 // need conditional code because types don't match in winuser.h
 #ifdef _WIN64
 				m_hIconChildMaximized = (HICON)::GetClassLongPtr(wnd, GCLP_HICONSM);
-				if(m_hIconChildMaximized == NULL)
+				if (m_hIconChildMaximized == NULL)
 				{
-					m_hIconChildMaximized = (HICON) ::GetClassLongPtr(wnd, GCLP_HICON);
+					m_hIconChildMaximized = (HICON)::GetClassLongPtr(wnd, GCLP_HICON);
 				}
 #else
 				m_hIconChildMaximized = (HICON)LongToHandle(::GetClassLongPtr(wnd, GCLP_HICONSM));
-				if(m_hIconChildMaximized == NULL)
+				if (m_hIconChildMaximized == NULL)
 				{
-					m_hIconChildMaximized = (HICON) LongToHandle(::GetClassLongPtr(wnd, GCLP_HICON));
+					m_hIconChildMaximized = (HICON)LongToHandle(::GetClassLongPtr(wnd, GCLP_HICON));
 				}
 #endif
 			}
 		}
 
 		T* pT = static_cast<T*>(this);
-		pT->RefreshMaximizedState((bMaxOld != m_bChildMaximized), (hIconOld != m_hIconChildMaximized));
+		pT->RefreshMaximizedState((bMaxOld != this->m_bChildMaximized), (hIconOld != this->m_hIconChildMaximized));
 
 		bHandled = FALSE;
 		return 0;
@@ -1966,17 +1957,17 @@ public:
 	{
 		HWND hWndChild = (HWND)wParam;
 
-		if(m_hWndChildMaximized == hWndChild)
+		if (this->m_hWndChildMaximized == hWndChild)
 		{
-			bool bMaxOld = m_bChildMaximized;
-			HICON hIconOld = m_hIconChildMaximized;
+			bool bMaxOld = this->m_bChildMaximized;
+			HICON hIconOld = this->m_hIconChildMaximized;
 
 			m_bChildMaximized = false;
 			m_hWndChildMaximized = NULL;
 			m_hIconChildMaximized = NULL;
 
 			T* pT = static_cast<T*>(this);
-			pT->RefreshMaximizedState((bMaxOld != m_bChildMaximized), (hIconOld != m_hIconChildMaximized));
+			pT->RefreshMaximizedState((bMaxOld != this->m_bChildMaximized), (hIconOld != this->m_hIconChildMaximized));
 		}
 
 		bHandled = FALSE;
@@ -1987,60 +1978,60 @@ public:
 	{
 		// NOTE: This code comes out of CMDICommandBarCtrlImpl::OnAllHookMessages.
 		//  If the base implementation changes, reflect those changes here.
-		if(bMaximizeChanged)
+		if (bMaximizeChanged)
 		{
 #ifdef _CMDBAR_EXTRA_TRACE
-			ATLTRACE2(atlTraceUI, 0, "MDI CmdBar - All messages hook change: m_bChildMaximized = %s\n", m_bChildMaximized ? "true" : "false");
+			ATLTRACE2(atlTraceUI, 0, "MDI CmdBar - All messages hook change: this->m_bChildMaximized = %s\n", this->m_bChildMaximized ? "true" : "false");
 #endif
 			// assuming we are in a rebar, change our size to accomodate new state
 			// we hope that if we are not in a rebar, nCount will be 0
-			int nCount = (int)::SendMessage(GetParent(), RB_GETBANDCOUNT, 0, 0L);
-			int cxDiff = (m_bChildMaximized ? 1 : -1) * (m_cxLeft + m_cxRight);
-			for(int i = 0; i < nCount; i++)
-			{ 
+			int nCount = (int)::SendMessage(this->GetParent(), RB_GETBANDCOUNT, 0, 0L);
+			int cxDiff = (m_bChildMaximized ? 1 : -1) * (m_cxLeft + this->m_cxRight);
+			for (int i = 0; i < nCount; i++)
+			{
 #if (_WIN32_IE >= 0x0500)
-				REBARBANDINFO rbi = { sizeof(REBARBANDINFO), RBBIM_CHILD | RBBIM_CHILDSIZE | RBBIM_IDEALSIZE | RBBIM_STYLE };
-				::SendMessage(GetParent(), RB_GETBANDINFO, i, (LPARAM)&rbi);
-				if(rbi.hwndChild == m_hWnd)
+				REBARBANDINFO rbi = {sizeof(REBARBANDINFO), RBBIM_CHILD | RBBIM_CHILDSIZE | RBBIM_IDEALSIZE | RBBIM_STYLE};
+				::SendMessage(this->GetParent(), RB_GETBANDINFO, i, (LPARAM)&rbi);
+				if (rbi.hwndChild == this->m_hWnd)
 				{
-					if((rbi.fStyle & RBBS_USECHEVRON) != 0)
+					if ((rbi.fStyle & RBBS_USECHEVRON) != 0)
 					{
 						rbi.fMask = RBBIM_CHILDSIZE | RBBIM_IDEALSIZE;
 						rbi.cxMinChild += cxDiff;
 						rbi.cxIdeal += cxDiff;
-						::SendMessage(GetParent(), RB_SETBANDINFO, i, (LPARAM)&rbi);
+						::SendMessage(this->GetParent(), RB_SETBANDINFO, i, (LPARAM)&rbi);
 					}
 					break;
 				}
 #elif (_WIN32_IE >= 0x0400)
-				REBARBANDINFO rbi = { sizeof(REBARBANDINFO), RBBIM_CHILD | RBBIM_CHILDSIZE | RBBIM_IDEALSIZE };
-				::SendMessage(GetParent(), RB_GETBANDINFO, i, (LPARAM)&rbi);
-				if(rbi.hwndChild == m_hWnd)
+				REBARBANDINFO rbi = {sizeof(REBARBANDINFO), RBBIM_CHILD | RBBIM_CHILDSIZE | RBBIM_IDEALSIZE};
+				::SendMessage(this->GetParent(), RB_GETBANDINFO, i, (LPARAM)&rbi);
+				if (rbi.hwndChild == this->m_hWnd)
 				{
 					rbi.fMask = RBBIM_CHILDSIZE | RBBIM_IDEALSIZE;
 					rbi.cxMinChild += cxDiff;
 					rbi.cxIdeal += cxDiff;
-					::SendMessage(GetParent(), RB_SETBANDINFO, i, (LPARAM)&rbi);
+					::SendMessage(this->GetParent(), RB_SETBANDINFO, i, (LPARAM)&rbi);
 					break;
 				}
 #else //(_WIN32_IE < 0x0400)
-				REBARBANDINFO rbi = { sizeof(REBARBANDINFO), RBBIM_CHILD | RBBIM_CHILDSIZE };
-				::SendMessage(GetParent(), RB_GETBANDINFO, i, (LPARAM)&rbi);
-				if(rbi.hwndChild == m_hWnd)
+				REBARBANDINFO rbi = {sizeof(REBARBANDINFO), RBBIM_CHILD | RBBIM_CHILDSIZE};
+				::SendMessage(this->GetParent(), RB_GETBANDINFO, i, (LPARAM)&rbi);
+				if (rbi.hwndChild == this->m_hWnd)
 				{
 					rbi.fMask = RBBIM_CHILDSIZE;
 					rbi.cxMinChild += cxDiff;
-					::SendMessage(GetParent(), RB_SETBANDINFO, i, (LPARAM)&rbi);
+					::SendMessage(this->GetParent(), RB_SETBANDINFO, i, (LPARAM)&rbi);
 					break;
 				}
 #endif //!(_WIN32_IE >= 0x0500)
 			}
 		}
 
-		if(bMaximizeChanged || bIconChanged)
+		if (bMaximizeChanged || bIconChanged)
 		{
 			// force size change and redraw everything
-			RECT rect = { 0 };
+			RECT rect = {0};
 			GetWindowRect(&rect);
 			::MapWindowPoints(NULL, GetParent(), (LPPOINT)&rect, 2);
 			SetRedraw(FALSE);

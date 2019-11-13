@@ -11,13 +11,17 @@
 #include "Win32/Win32Lib.h"
 
 namespace fusion {
+namespace win32 {
 
 std::wstring LoadString(int id)
 {
-	CString cs;
-	if (!cs.LoadString(id))
-		Win32::ThrowLastError("LoadString");
-	return static_cast<const wchar_t*>(cs);
+    CString cs;
+    if (cs.LoadString(id) == 0)
+    {
+        Win32::ThrowLastError("LoadString");
+    }
+    return static_cast<const wchar_t*>(cs);
 }
 
+} // namespace win32
 } // namespace fusion

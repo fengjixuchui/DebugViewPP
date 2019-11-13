@@ -1,6 +1,6 @@
 // (C) Copyright Gert-Jan de Vos and Jan Wilmans 2013.
 // Distributed under the Boost Software License, Version 1.0.
-// (See accompanying file LICENSE_1_0.txt or copy at 
+// (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
 // Repository at: https://github.com/djeedjay/DebugViewPP/
@@ -12,31 +12,32 @@
 
 namespace fusion {
 namespace debugviewpp {
-
-class ATL_NO_VTABLE DropTargetSupport : public CComObjectRootEx<CComSingleThreadModel>, public IDropTarget
+class ATL_NO_VTABLE DropTargetSupport
+    : public CComObjectRootEx<CComSingleThreadModel>
+    , public IDropTarget
 {
 public:
-	BEGIN_COM_MAP(DropTargetSupport)
-		COM_INTERFACE_ENTRY(IDropTarget)
-	END_COM_MAP()
+    BEGIN_COM_MAP(DropTargetSupport)
+        COM_INTERFACE_ENTRY(IDropTarget)
+    END_COM_MAP()
 
-	DropTargetSupport();
-	void Register(HWND hwnd);
-	void Unregister();
+    DropTargetSupport();
+    virtual ~DropTargetSupport() = default;
+    void Register(HWND hwnd);
+    void Unregister();
 
-	STDMETHOD(DragEnter)(IDataObject* pDataObject, DWORD grfKeyState, POINTL pt, DWORD* pdwEffect);
-	STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, DWORD* pdwEffect);
-	STDMETHOD(DragLeave)();
-	STDMETHOD(Drop)(IDataObject* pDataObject, DWORD grfKeyState, POINTL pt, DWORD* pdwEffect);
+    STDMETHOD(DragEnter)(IDataObject* pDataObject, DWORD grfKeyState, POINTL pt, DWORD* pdwEffect) override;
+    STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, DWORD* pdwEffect) override;
+    STDMETHOD(DragLeave)() override;
+    STDMETHOD(Drop)(IDataObject* pDataObject, DWORD grfKeyState, POINTL pt, DWORD* pdwEffect) override;
 
-	typedef boost::signals2::signal<void(const std::wstring& uri)> DroppedSignal;
-	boost::signals2::connection SubscribeToDropped(DroppedSignal::slot_type slot);
+    using DroppedSignal = boost::signals2::signal<void(const std::wstring&)>;
+    boost::signals2::connection SubscribeToDropped(DroppedSignal::slot_type slot);
 
 private:
-	FORMATETC m_fe;
-	HWND m_hwnd;
-	DroppedSignal m_onDropped;
+    HWND m_hwnd = nullptr;
+    DroppedSignal m_onDropped;
 };
 
-} // namespace debugviewpp 
+} // namespace debugviewpp
 } // namespace fusion

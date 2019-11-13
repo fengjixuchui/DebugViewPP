@@ -1,6 +1,6 @@
 // (C) Copyright Gert-Jan de Vos and Jan Wilmans 2013.
 // Distributed under the Boost Software License, Version 1.0.
-// (See accompanying file LICENSE_1_0.txt or copy at 
+// (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
 // Repository at: https://github.com/djeedjay/DebugViewPP/
@@ -22,32 +22,32 @@ std::wstring GetModuleFilenameUnspoofable();
 class Process
 {
 public:
-	Process(const std::wstring& pathName, const std::vector<std::wstring>& args);
-	Process(const std::wstring& pathName, const std::wstring& args);
+    Process(const std::wstring& pathName, const std::vector<std::wstring>& args);
+    Process(const std::wstring& pathName, const std::wstring& args);
 
-	std::wstring GetName() const;
-	HANDLE GetStdIn() const;
-	HANDLE GetStdOut() const;
-	HANDLE GetStdErr() const;
-	HANDLE GetProcessHandle() const;
-	HANDLE GetThreadHandle() const;
-	unsigned long GetProcessId() const;
-	unsigned long GetThreadId() const;
+    std::wstring GetName() const;
+    HANDLE GetStdIn() const;
+    HANDLE GetStdOut() const;
+    HANDLE GetStdErr() const;
+    HANDLE GetProcessHandle() const;
+    HANDLE GetThreadHandle() const;
+    unsigned long GetProcessId() const;
+    unsigned long GetThreadId() const;
 
-	bool IsRunning() const;
-	void Wait() const;
+    bool IsRunning() const;
+    void Wait() const;
 
 private:
-	void Run(const std::wstring& pathName, const std::wstring& args);
+    void Run(const std::wstring& pathName, const std::wstring& args);
 
-	std::wstring m_name;
-	Handle m_stdIn;
-	Handle m_stdOut;
-	Handle m_stdErr;
-	Handle m_hProcess;
-	Handle m_hThread;
-	unsigned long m_processId;
-	unsigned long m_threadId;
+    std::wstring m_name;
+    Handle m_stdIn;
+    Handle m_stdOut;
+    Handle m_stdErr;
+    Handle m_hProcess;
+    Handle m_hThread;
+    unsigned long m_processId;
+    unsigned long m_threadId;
 };
 
 } // namespace Win32

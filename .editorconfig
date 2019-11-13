@@ -8,14 +8,17 @@ end_of_line = crlf
 charset = latin1
 
 [*.cpp]
-indent_style = tab
+indent_style = space
 indent_size = 4
 
 [*.h]
-indent_style = tab
+indent_style = space
 indent_size = 4
 
 [*.rc]
 indent_style = space
 indent_size = 4
 
+[*.yml]
+indent_style = space
+indent_size = 4
