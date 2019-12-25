@@ -16,12 +16,12 @@
 namespace fusion {
 namespace debugviewpp {
 
-typedef std::unordered_map<DWORD, Win32::Handle> PidMap;
+using PidMap = std::unordered_map<DWORD, Win32::Handle>;
 
 class ProcessMonitor
 {
 public:
-    typedef boost::signals2::signal<void(DWORD, HANDLE)> ProcessEnded;
+    using ProcessEnded = boost::signals2::signal<void(DWORD, HANDLE)>;
 
     ProcessMonitor();
     ~ProcessMonitor();

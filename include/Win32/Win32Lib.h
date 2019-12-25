@@ -38,44 +38,44 @@ public:
 
 struct LocalAllocDeleter
 {
-    typedef HLOCAL pointer;
+    using pointer = HLOCAL;
 
     void operator()(pointer p) const;
 };
 
-typedef std::unique_ptr<void, LocalAllocDeleter> HLocal;
+using HLocal = std::unique_ptr<void, LocalAllocDeleter>;
 
 struct GlobalAllocDeleter
 {
-    typedef HGLOBAL pointer;
+    using pointer = HGLOBAL;
 
     void operator()(pointer p) const;
 };
 
-typedef std::unique_ptr<void, GlobalAllocDeleter> HGlobal;
+using HGlobal = std::unique_ptr<void, GlobalAllocDeleter>;
 
 struct HandleDeleter
 {
-    typedef HANDLE pointer;
+    using pointer = HANDLE;
 
     void operator()(pointer p) const;
 };
 
-typedef std::unique_ptr<void, HandleDeleter> Handle;
+using Handle = std::unique_ptr<void, HandleDeleter>;
 
 struct ChangeNotificationHandleDeleter
 {
-    typedef HANDLE pointer;
+    using pointer = HANDLE;
 
     void operator()(pointer p) const;
 };
 
-typedef std::unique_ptr<void, ChangeNotificationHandleDeleter> ChangeNotificationHandle;
+using ChangeNotificationHandle = std::unique_ptr<void, ChangeNotificationHandleDeleter>;
 
 template <typename T>
 struct GdiObjectDeleter
 {
-    typedef T pointer;
+    using pointer = T;
 
     void operator()(pointer p) const
     {
@@ -87,7 +87,7 @@ struct GdiObjectDeleter
 template <>
 struct GdiObjectDeleter<HICON>
 {
-    typedef HICON pointer;
+    using pointer = HICON;
 
     void operator()(pointer p) const
     {
@@ -96,14 +96,14 @@ struct GdiObjectDeleter<HICON>
     }
 };
 
-typedef std::unique_ptr<std::remove_pointer<HGDIOBJ>::type, GdiObjectDeleter<HGDIOBJ>> GdiObject;
-typedef std::unique_ptr<std::remove_pointer<HPEN>::type, GdiObjectDeleter<HPEN>> HPen;
-typedef std::unique_ptr<std::remove_pointer<HBRUSH>::type, GdiObjectDeleter<HBRUSH>> HBrush;
-typedef std::unique_ptr<std::remove_pointer<HFONT>::type, GdiObjectDeleter<HFONT>> HFont;
-typedef std::unique_ptr<std::remove_pointer<HBITMAP>::type, GdiObjectDeleter<HBITMAP>> HBitmap;
-typedef std::unique_ptr<std::remove_pointer<HRGN>::type, GdiObjectDeleter<HRGN>> HRegion;
-typedef std::unique_ptr<std::remove_pointer<HPALETTE>::type, GdiObjectDeleter<HPALETTE>> HPalette;
-typedef std::unique_ptr<std::remove_pointer<HICON>::type, GdiObjectDeleter<HICON>> HIcon;
+using GdiObject = std::unique_ptr<std::remove_pointer<HGDIOBJ>::type, GdiObjectDeleter<HGDIOBJ>>;
+using HPen = std::unique_ptr<std::remove_pointer<HPEN>::type, GdiObjectDeleter<HPEN>>;
+using HBrush = std::unique_ptr<std::remove_pointer<HBRUSH>::type, GdiObjectDeleter<HBRUSH>>;
+using HFont = std::unique_ptr<std::remove_pointer<HFONT>::type, GdiObjectDeleter<HFONT>>;
+using HBitmap = std::unique_ptr<std::remove_pointer<HBITMAP>::type, GdiObjectDeleter<HBITMAP>>;
+using HRegion = std::unique_ptr<std::remove_pointer<HRGN>::type, GdiObjectDeleter<HRGN>>;
+using HPalette = std::unique_ptr<std::remove_pointer<HPALETTE>::type, GdiObjectDeleter<HPALETTE>>;
+using HIcon = std::unique_ptr<std::remove_pointer<HICON>::type, GdiObjectDeleter<HICON>>;
 
 template <typename T>
 class GlobalLock

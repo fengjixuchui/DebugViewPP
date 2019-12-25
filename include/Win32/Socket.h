@@ -25,12 +25,12 @@ void WSAThrowLastError(const std::string& what);
 
 struct SocketDeleter
 {
-    typedef SOCKET pointer;
+    using pointer = SOCKET;
 
     void operator()(pointer p) const;
 };
 
-typedef std::unique_ptr<void, SocketDeleter> Socket;
+using Socket = std::unique_ptr<void, SocketDeleter>;
 
 Socket WSASocket(int af, int type, int protocol);
 Socket WSASocket(int af, int type, int protocol, const WSAPROTOCOL_INFO* pProtocolInfo, GROUP g, DWORD flags);
